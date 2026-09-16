@@ -1,11 +1,14 @@
 from flask import Flask, request, jsonify
 import requests
+import os
 
 app = Flask(__name__)
 
+load_dotenv()
+
 DND_API = "https://www.dnd5eapi.co/api/spells/"
 HF_API = "https://api-inference.huggingface.co/models/google/flan-t5-base"
-HF_HEADERS = {"Authorization": "Bearer YOUR_HF_API_KEY"}
+HF_HEADERS = {"Authorization": f"Bearer {os.getenv('HF_API_KEY')}"}
 
 def query_huggingface(prompt):
     response = requests.post(HF_API, headers=HF_HEADERS, json={"inputs": prompt})
